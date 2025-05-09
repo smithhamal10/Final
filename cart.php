@@ -2,6 +2,8 @@
 session_start();
 include 'db_connect.php';
 $isLoggedIn = isset($_SESSION['user_id']);
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -12,26 +14,36 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <title>SwooshX - Cart</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <header>
+<header class="main-header">
+    <div class="header-left">
         <div class="logo">SwooshX</div>
-        <nav>
+    </div>
+    <div class="header-center">
+        <nav class="main-nav">
             <ul>
                 <li><a href="home.php">Home</a></li>
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="cart.php" class="cart-btn">Cart</a></li>
-                <?php if ($isLoggedIn): ?>
-                    <li><a href="logout.php" class="logout-btn">Logout</a></li>
-                <?php else: ?>
-                    <li><a href="login.html" class="login-btn">Login</a></li>
-                <?php endif; ?>
             </ul>
         </nav>
-    </header>
-    
+    </div>
+    <div class="header-right">
+        <form class="search-form" action="shop.php" method="get">
+            <input type="text" name="search" placeholder="Search products..." value="<?php echo htmlspecialchars($search); ?>" />
+            <button type="submit">🔍</button>
+        </form>
+        <a href="cart.php" class="icon-link">🛒</a>
+        <?php if ($isLoggedIn): ?>
+            <a href="logout.php" class="icon-link">Logout</a>
+        <?php else: ?>
+            <a href="login.html" class="icon-link">Login</a>
+        <?php endif; ?>
+    </div>
+</header>
     <section class="cart">
         <h1>Your Cart</h1>
 
@@ -107,5 +119,25 @@ $isLoggedIn = isset($_SESSION['user_id']);
             });
         });
     </script>
+    <footer>
+    <div class="footer-container">
+        <div class="footer-logo">SwooshX</div>
+        <div class="footer-links">
+            <a href="home.php">Home</a>
+            <a href="shop.php">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-info">
+            <p>&copy; <?php echo date("Y"); ?> SwooshX. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
