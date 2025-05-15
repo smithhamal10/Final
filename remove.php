@@ -1,38 +1,32 @@
 <?php
 session_start();
-include 'db_connect.php';
-
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["success" => false, "message" => "User not logged in."]);
+// Ensure the cart exists in the session
+if (!isset($_SESSION['cart'])) {
+    echo json_encode(["success" => false, "message" => "No cart items found."]);
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['cart_id'])) {
-    $cart_id = intval($_POST['cart_id']);
-    $user_id = $_SESSION['user_id'];
+if (isset($_POST['product_id'])) {
+    $product_id = intval($_POST['product_id']);
 
-    // Delete item only if it belongs to the logged-in user
-    $sql = "DELETE FROM cart WHERE id = ? AND user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $cart_id, $user_id);
+    // Remove the product from the session cart
+    if (isset($_SESSION['cart'][$product_id])) {
+        unset($_SESSION['cart'][$product_id]);
 
-    if ($stmt->execute()) {
-        // Recalculate total price after deletion
-        $sql_total = "SELECT SUM(products.price * cart.quantity) AS total FROM cart 
-                      JOIN products ON cart.product_id = products.id 
-                      WHERE cart.user_id = ?";
-        $stmt_total = $conn->prepare($sql_total);
-        $stmt_total->bind_param("i", $user_id);
-        $stmt_total->execute();
-        $result_total = $stmt_total->get_result();
-        $row_total = $result_total->fetch_assoc();
-        $new_total = number_format($row_total['total'] ?? 0, 2);
+        // Recalculate total price after removal
+        $totalPrice = 0;
+        foreach ($_SESSION['cart'] as $id => $quantity) {
+            // Fetch product price (assuming you have product prices already in the session or database)
+            // For this, you can store product prices in $_SESSION when adding products to cart
+            $price = 100; // Example price (fetch from DB if needed)
+            $totalPrice += $price * $quantity;
+        }
 
-        echo json_encode(["success" => true, "new_total" => $new_total]);
+        echo json_encode(["success" => true, "new_total" => number_format($totalPrice, 2)]);
     } else {
-        echo json_encode(["success" => false, "message" => "Failed to remove item."]);
+        echo json_encode(["success" => false, "message" => "Item not found in cart."]);
     }
 } else {
     echo json_encode(["success" => false, "message" => "Invalid request."]);

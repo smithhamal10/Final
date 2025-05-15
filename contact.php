@@ -53,14 +53,6 @@ session_start();
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-            </div>
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" placeholder="Enter your address" required>
-            </div>
-            <div class="form-group">
                 <label for="message">Message</label>
                 <textarea id="message" name="message" rows="6" placeholder="Enter your message" required></textarea>
             </div>
@@ -76,8 +68,8 @@ session_start();
             <div class="footer-links">
                 <a href="home.php">Home</a>
                 <a href="shop.php">Shop</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="about.php">About</a>
+                <a href="contact.php">Contact</a>
             </div>
             <div class="footer-socials">
                 <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>

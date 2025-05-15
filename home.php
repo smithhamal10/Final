@@ -71,24 +71,23 @@ session_start();
     </div>
 </section>
 <section class="categories">
-    <h2>Shop by Category</h2>
+    <h2>Brand Category</h2>
     <div class="category-gallery">
         <div class="category-item">
-        <a href="runningshoes.php"><img src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/a5ce41b6-b350-48ff-8838-f09a6b07b737/W+NIKE+VOMERO+18.png" ></a>
-                <h3>Running Shoes</h3>
+        <a href="Nike.php"><img src="https://imgs.search.brave.com/YdQ7tNBAyQajwX_m_a4rt5o6103X1f9IiDvpNUpYtIg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5kZXNpZ25ydXNo/LmNvbS9pbnNwaXJh/dGlvbl9pbWFnZXMv/MTM0ODA1L2NvbnZl/cnNpb25zL18xNTEy/MDc2ODAzXzkzX05p/a2UtZGVza3RvcC5q/cGc" ></a>
+                <h3>Nike</h3>
         </div>
         <div class="category-item">
-        <a href="slipers.php"><img src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/77874acd-bf25-4037-bf21-9b442d1b28eb/NIKE+VICTORI+ONE+SLIDE.png" ></a>
-                <h3>Slipers</h3>
-            
+        <a href="Adidas.php"><img src="https://imgs.search.brave.com/bIQGbeClEj4QdNgFRp2r-TqPJKKd6F8RMN4O2PR8rnw/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnRoZW5ld3Nt/YXJrZXQuY29tL1By/ZXZpZXdzL0FESUQv/U3RpbGxBc3NldHMv/OTYweDU0MC82ODkz/NDcuanBn" ></a>
+                <h3>Adidas</h3>
         </div>
         <div class="category-item">
-        <a href="SBDUNKLOW.php"><img src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/ed8d46c0-d433-467c-a72a-c850d6380c85/NIKE+SB+DUNK+LOW+PRO.png" ></a>
-                <h3> SB Dunk Low</h3>
+        <a href="NB.php"><img src="https://i.pinimg.com/736x/e0/8c/de/e08cde2f956d6768fc44216a9b89ff6e.jpg" ></a>
+                <h3>New Balance</h3>
         </div>
         <div class="category-item">
-        <a href="AIRJORDANHIGH.php"><img src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/693f9b4d-95da-4df4-916e-f05c35c850d8/AIR+JORDAN+1+RETRO+HIGH+OG.png"></a>
-                <h3>Air Jordan High</h3>
+        <a href="puma.php"><img src="https://www.logomagicians.com/wp-content/uploads/2024/02/What-is-Puma.webp"></a>
+                <h3>puma</h3>
         </div>
     </div>
 </section>
@@ -171,7 +170,7 @@ session_start();
       <i class="fas fa-star" data-value="5"></i>
     </div>
     <p>Your feedback helps us improve and grow!</p>
-    <a href="https://www.google.com/search?q=swooshx&ludocid=YOUR_PLACE_ID#lrd=0x0:0x0,1,,,," target="_blank" class="review-button">
+    <a href="https://console.cloud.google.com/google/maps-hosted/build?inv=1&invt=AbxGLg&authuser=4" target="_blank" class="review-button">
       Write a Review
     </a>
   </div>
@@ -201,11 +200,10 @@ session_start();
             alert(`You rated us ${rating} stars!`);
         });
     });
-    </script>
+    </script>  
     <footer>
     <div class="footer-container">
         <div class="footer-logo">SwooshX</div>
-
         <div class="footer-links">
             <a href="home.php">Home</a>
             <a href="shop.php">Shop</a>

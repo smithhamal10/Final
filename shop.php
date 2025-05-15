@@ -4,6 +4,28 @@ include 'db_connect.php';
 
 $isLoggedIn = isset($_SESSION['user_id']);
 $sortOrder = $_GET['sort_order'] ?? 'default';
+$search = $_GET['search'] ?? '';
+
+if (!empty($search)) {
+    $sql = "SELECT * FROM products WHERE name LIKE ? ORDER BY ";
+    $param = '%' . $search . '%';
+    $orderClause = $sortOrder == 'low-high' ? 'price ASC' :
+                   ($sortOrder == 'high-low' ? 'price DESC' : 'id DESC');
+    $sql .= $orderClause;
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $param);
+} else {
+    // Sorting logic as you already have
+    if ($sortOrder == 'low-high') {
+        $sql = "SELECT * FROM products ORDER BY price ASC";
+    } elseif ($sortOrder == 'high-low') {
+        $sql = "SELECT * FROM products ORDER BY price DESC";
+    } else {
+        $sql = "SELECT * FROM products";
+    }
+    $stmt = $conn->prepare($sql);
+}
+
 
 // Adjust the SQL query based on the sorting option
 if ($sortOrder == 'low-high') {
@@ -85,7 +107,8 @@ $result = $stmt->get_result();
                 <div class="product-info">
                     <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                     <p class="price">$<?php echo htmlspecialchars($row['price']); ?></p>
-                    <button class="view-details" data-product-id="<?php echo $row['id']; ?>">View Details</button>
+                    <a href="product_details.php?id=<?php echo $row['id']; ?>" class="view-details">View Details</a>
+
                 </div>
             </div>
         <?php endwhile; ?>
