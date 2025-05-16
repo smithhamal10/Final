@@ -136,7 +136,14 @@ if (empty($_SESSION['cart'])) {
         <h3 style="margin-top: 20px;">Choose Payment Method</h3>
         <div class="payment-options">
             <a href="pay.php?amount=<?php echo $grandTotal; ?>">Pay with Khalti</a>
-            <a href="cod_process.php" style="background-color: #4CAF50; color: white;">Cash on Delivery</a>
+           <form action="cod_process.php" method="POST" style="display:inline;">
+    <input type="hidden" name="payment_method" value="COD">
+    <input type="hidden" name="place_order" value="1">
+    <input type="hidden" name="total_amount" value="<?php echo $grandTotal; ?>">
+    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Cash on Delivery
+    </button>
+</form>
         </div>
     </div>
 </main>
