@@ -1,34 +1,37 @@
 <?php
 session_start();
-include('db_connect.php'); // Ensure this connects to your database using MySQLi
+include('db_connect.php');
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit();
 }
 
-// Handle product addition
+// Only process form data when the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']);
-    $price = trim($_POST['price']);
-    $imageUrl = trim($_POST['image_url']);
+    // Safely access all form fields
+    $name = trim($_POST['name'] ?? '');
+    $price = trim($_POST['price'] ?? '');
+    $category = trim($_POST['category'] ?? '');
+    $imageUrl = trim($_POST['image_url'] ?? '');
 
-    if (!empty($name) && !empty($price) && !empty($imageUrl)) {
-        $stmt = $conn->prepare("INSERT INTO products (name, price, image_url, created_at) VALUES (?, ?, ?, NOW())");
-        $stmt->bind_param("sds", $name, $price, $imageUrl);
-        
+    if (!empty($name) && !empty($price) && !empty($imageUrl) && !empty($category)) {
+        $stmt = $conn->prepare("INSERT INTO products (name, price, image_url, category, created_at) VALUES (?, ?, ?, ?, NOW())");
+        $stmt->bind_param("sdss", $name, $price, $imageUrl, $category);
+
         if ($stmt->execute()) {
             $message = "Product added successfully!";
         } else {
             $message = "Error adding product: " . $conn->error;
         }
-        
+
         $stmt->close();
     } else {
         $message = "All fields are required!";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,19 +126,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">Admin Panel</div>
+<body style="background: #fafafa; color: #333; font-family: Arial, sans-serif; margin: 0; padding: 0;">
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background-color: #222; color: #fff;">
+    <div class="logo" style="font-size: 28px; font-weight: bold; letter-spacing: 1px;"> SwooshX-Admin Panel</div>
     <nav>
-        <ul>
-            <li><a href="admin_dashboard.php">Dashboard</a></li>
-            <li><a href="manage_product.php">Manage Products</a></li>
-            <li><a href="order.php">Orders</a></li>
-            <li><a href="payment_history.php">Payment History</a></li>
-            <li><a href="logout.php">Logout</a></li>
+        <ul style="list-style: none; display: flex;">
+            <li style="margin: 0 15px;"><a href="admin_dashboard.php" style="text-decoration: none; color: #fff; font-size: 16px;">Dashboard</a></li>
+            <li style="margin: 0 15px;"><a href="manage_product.php" style="text-decoration: none; color: #fff; font-size: 16px;">Manage Products</a></li>
+            <li style="margin: 0 15px;"><a href="top_sellers.php" style="text-decoration: none; color: #fff; font-size: 16px;">Top Sellers</a></li>
+            <li style="margin: 0 15px;"><a href="new_arrivals.php" style="text-decoration: none; color: #fff; font-size: 16px;">New arrivals</a></li>
+            <li style="margin: 0 15px;"><a href="view_product.php" style="text-decoration: none; color: #fff; font-size: 16px;">View Product</a></li>
+             <li style="margin: 0 15px;"><a href="view_messages.php" style="text-decoration: none; color: #fff; font-size: 16px;">View Messages</a></li>
+            <li style="margin: 0 15px;"><a href="order.php" style="text-decoration: none; color: #fff; font-size: 16px;">Orders</a></li>
+            <li style="margin: 0 15px;"><a href="logout.php" style="text-decoration: none; color: #fff; font-size: 16px;">Logout</a></li>
         </ul>
     </nav>
 </header>
-
 <div class="dashboard-container">
     <h1>Manage Products</h1>
     
@@ -143,14 +149,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <div class="form-container">
         <form method="POST" action="">
-            <label>Product Name:</label>
-            <input type="text" name="name" required>
-            <label>Price:</label>
-            <input type="number" step="0.01" name="price" required>
-            <label>Product Image URL:</label>
-            <input type="text" name="image_url" placeholder="Enter image URL" required>
-            <button type="submit">Add Product</button>
-        </form>
+    <label>Product Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Price:</label>
+    <input type="number" step="0.01" name="price" required>
+
+    <label>Category:</label>
+    <input type="text" name="category" required>
+
+    <label>Product Image URL:</label>
+    <input type="text" name="image_url" placeholder="Enter image URL" required>
+
+    <button type="submit">Add Product</button>
+</form>
     </div>
 </div>
 </body>
